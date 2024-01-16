@@ -7,7 +7,6 @@ function App() {
     const [inputValue, setInputValue] = useState("");
     const [taskList, setTaskList] = useState([]);
     const [completedTaskList, setCompletedTaskList] = useState([]);
-
     const inputElement = useRef(); // getting a virtual DOM element
 
     function handleChange(event) {
@@ -32,17 +31,17 @@ function App() {
                 newCompletedTaskList.push(taskList[i])
             }
         }
-        setTaskList(newTaskList);      
-        setCompletedTaskList(newCompletedTaskList);       
+        setTaskList(newTaskList);
+        setCompletedTaskList(newCompletedTaskList);
     }
 
-    function undoClick(index){
+    function undoClick(index) {
         const newCompletedTaskList = [];
         let newTaskList = [...taskList]
-        for(let i = 0; i<completedTaskList.length; i++){
-            if(i !== index){
+        for (let i = 0; i < completedTaskList.length; i++) {
+            if (i !== index) {
                 newCompletedTaskList.push(completedTaskList[i]);
-            }else{
+            } else {
                 newTaskList.push(completedTaskList[i])
             }
         }
@@ -50,10 +49,10 @@ function App() {
         setCompletedTaskList(newCompletedTaskList)
     }
 
-    function deleteClick(listName, index){
+    function deleteClick(listName, index) {
         const isDelete = window.confirm("Are you sure you want to delete?")
-        if(isDelete){
-            if(listName === "taskList"){
+        if (isDelete) {
+            if (listName === "taskList") {
                 const newTaskList = [];
                 for (let i = 0; i < taskList.length; i++) {
                     if (i !== index) {
@@ -89,7 +88,7 @@ function App() {
                 </div>
                 <div className="taskListContainer">
                     <TaskList taskList={taskList} doneClick={doneClick} deleteClick={deleteClick} />
-                    <CompletedTask completedTaskList={completedTaskList} undoClick = {undoClick} deleteClick={deleteClick} />
+                    <CompletedTask completedTaskList={completedTaskList} undoClick={undoClick} deleteClick={deleteClick} />
                 </div>
             </div>
         </div>
