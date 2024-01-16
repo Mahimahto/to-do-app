@@ -36,6 +36,20 @@ function App() {
         setCompletedTaskList(newCompletedTaskList);       
     }
 
+    function undoClick(index){
+        const newCompletedTaskList = [];
+        let newTaskList = [...taskList]
+        for(let i = 0; i<completedTaskList.length; i++){
+            if(i !== index){
+                newCompletedTaskList.push(completedTaskList[i]);
+            }else{
+                newTaskList.push(completedTaskList[i])
+            }
+        }
+        setTaskList(newTaskList);
+        setCompletedTaskList(newCompletedTaskList)
+    }
+
     function deleteClick(listName, index){
         const isDelete = window.confirm("Are you sure you want to delete?")
         if(isDelete){
@@ -75,7 +89,7 @@ function App() {
                 </div>
                 <div className="taskListContainer">
                     <TaskList taskList={taskList} doneClick={doneClick} deleteClick={deleteClick} />
-                    <CompletedTask completedTaskList={completedTaskList} deleteClick={deleteClick} />
+                    <CompletedTask completedTaskList={completedTaskList} undoClick = {undoClick} deleteClick={deleteClick} />
                 </div>
             </div>
         </div>
