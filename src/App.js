@@ -7,6 +7,8 @@ function App() {
     const [inputValue, setInputValue] = useState("");
     const [taskList, setTaskList] = useState([]);
     const [completedTaskList, setCompletedTaskList] = useState([]);
+    const [newTask, setNewTask] = useState();
+
     const inputElement = useRef(); // getting a virtual DOM element
 
     function handleChange(event) {
@@ -16,41 +18,27 @@ function App() {
     function handleClick() {
         const newTaskList = [...taskList]; // Storing old tasks in a new variable
         newTaskList.push(inputValue);
-        setInputValue("");
+        setNewTask(inputValue)
         inputElement.current.value = "";
         setTaskList(newTaskList);
     }
 
     function doneClick(index) {
         const newTaskList = [];
-        let newCompletedTaskList = [...completedTaskList]
+        let newCompletedTaskList = [...completedTaskList];
         for (let i = 0; i < taskList.length; i++) {
             if (i !== index) {
                 newTaskList.push(taskList[i]);
             } else {
-                newCompletedTaskList.push(taskList[i])
+                newCompletedTaskList.push(taskList[i]);
             }
         }
         setTaskList(newTaskList);
         setCompletedTaskList(newCompletedTaskList);
     }
 
-    function undoClick(index) {
-        const newCompletedTaskList = [];
-        let newTaskList = [...taskList]
-        for (let i = 0; i < completedTaskList.length; i++) {
-            if (i !== index) {
-                newCompletedTaskList.push(completedTaskList[i]);
-            } else {
-                newTaskList.push(completedTaskList[i])
-            }
-        }
-        setTaskList(newTaskList);
-        setCompletedTaskList(newCompletedTaskList)
-    }
-
     function deleteClick(listName, index) {
-        const isDelete = window.confirm("Are you sure you want to delete?")
+        const isDelete = window.confirm("Are you sure you want to delete?");
         if (isDelete) {
             if (listName === "taskList") {
                 const newTaskList = [];
@@ -87,8 +75,16 @@ function App() {
                     <button onClick={handleClick}>Add</button>
                 </div>
                 <div className="taskListContainer">
-                    <TaskList taskList={taskList} doneClick={doneClick} deleteClick={deleteClick} />
-                    <CompletedTask completedTaskList={completedTaskList} undoClick={undoClick} deleteClick={deleteClick} />
+                    <TaskList
+                        taskList={taskList}
+                        doneClick={doneClick}
+                        deleteClick={deleteClick}
+                        newTask={newTask}
+                    />
+                    <CompletedTask
+                        completedTaskList={completedTaskList}
+                        deleteClick={deleteClick}
+                    />
                 </div>
             </div>
         </div>
