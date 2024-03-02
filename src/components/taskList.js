@@ -27,9 +27,9 @@ function TaskList(props) {
 									>
 										Done
 									</button>
-									{/* <button onClick={() => editClick(index)}>
+									<button onClick={()=>props.editClick(index)}>
 										Edit
-									</button> */}
+									</button>
 									<button
 										onClick={() =>
 											props.deleteClick("taskList", index)

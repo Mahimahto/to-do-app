@@ -6,6 +6,7 @@ import CompletedTask from "./components/completedTasks";
 function App() {
 	const [inputValue, setInputValue] = useState("");
 	const [taskList, setTaskList] = useState([]);
+	const[editText,setEditText]= useState("")
 	const [completedTaskList, setCompletedTaskList] = useState([]);
 	const [newTask, setNewTask] = useState();
 
@@ -35,6 +36,9 @@ function App() {
 		}
 		setTaskList(newTaskList);
 		setCompletedTaskList(newCompletedTaskList);
+	}
+	function editClick(index){
+      console.log(index);
 	}
 
 	function undoClick(index) {
@@ -93,6 +97,7 @@ function App() {
 						taskList={taskList}
 						doneClick={doneClick}
 						deleteClick={deleteClick}
+						editClick={editClick}
 						newTask={newTask}
 					/>
 					<CompletedTask
