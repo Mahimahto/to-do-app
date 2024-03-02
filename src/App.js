@@ -5,10 +5,10 @@ import CompletedTask from "./components/completedTasks";
 
 function App() {
 	const [inputValue, setInputValue] = useState("");
+	const [editText, setEditText] = useState("");
 	const [taskList, setTaskList] = useState([]);
-	const[editText,setEditText]= useState("")
 	const [completedTaskList, setCompletedTaskList] = useState([]);
-	const [newTask, setNewTask] = useState();
+	const [clickedIndex, setClickedIndex] = useState(null);
 
 	const inputElement = useRef(); // getting a virtual DOM element
 
@@ -16,12 +16,20 @@ function App() {
 		setInputValue(event.target.value); // Asynchronous
 	}
 
+	function handleEditChange(event) {
+		setEditText(event.target.value);
+	}
+
 	function handleClick() {
-		const newTaskList = [...taskList]; // Storing old tasks in a new variable
-		newTaskList.push(inputValue);
-		setNewTask(inputValue);
-		inputElement.current.value = "";
-		setTaskList(newTaskList);
+		// Checking for empty strings so that users don't add them as tasks
+		// .trim() removes the spaces from front & end of a string
+		if (inputValue.trim() !== "") {
+			const newTaskList = [...taskList]; // Storing old tasks in a new variable
+			newTaskList.push(inputValue);
+			inputElement.current.value = "";
+			setTaskList(newTaskList);
+			setInputValue("");
+		}
 	}
 
 	function doneClick(index) {
@@ -78,6 +86,17 @@ function App() {
 		}
 	}
 
+	function editClick(index) {
+		setClickedIndex(index);
+	}
+
+	function saveClick() {
+		const newTaskList = [...taskList];
+		newTaskList[clickedIndex] = editText;
+		setTaskList(newTaskList);
+		setClickedIndex(null);
+	}
+
 	return (
 		<div className="App">
 			<h1 className="app-header">Welcome to your To-Do List</h1>
@@ -98,7 +117,9 @@ function App() {
 						doneClick={doneClick}
 						deleteClick={deleteClick}
 						editClick={editClick}
-						newTask={newTask}
+						clickedIndex={clickedIndex}
+						saveClick={saveClick}
+						handleEditChange={handleEditChange}
 					/>
 					<CompletedTask
 						completedTaskList={completedTaskList}
