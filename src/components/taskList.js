@@ -50,14 +50,6 @@ function TaskList(props) {
                 taskList.map((task, index) => {
                     return (
                         <div className="taskDiv" key={index}>
-<<<<<<< HEAD
-                            <p className="taskName">
-                                {task}
-                            </p>
-                            <button onClick={() => props.doneClick(index)}>Done</button>
-                            <button onClick={() => props.editClick(index)}>Edit</button>
-                            <button onClick={() => props.deleteClick("taskList", index)}>Delete</button>
-=======
                             {index === clickedIndex ? (
                                 <>
                                     <input
@@ -83,7 +75,6 @@ function TaskList(props) {
                                     </button>
                                 </>
                             )}
->>>>>>> ddab542deb7840d53bccd55b53cf662e798c17fe
                         </div>
                     );
                 })
